@@ -32,7 +32,7 @@ return {
         ["<C-o>"] = cmp.mapping.scroll_docs(4),
         ["<C-r>"] = cmp.mapping.complete(),
         ["<C-x>"] = cmp.mapping.abort(),
-        ["<Enter>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       }),
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
