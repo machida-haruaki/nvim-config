@@ -32,7 +32,9 @@ return {
         }, {
           { name = "buffer" },
           { name = "path" },
-        }),
+        }, {
+	  { name  = "html"}
+	}),
       }
     end,
   },
