@@ -1,54 +1,40 @@
 return {
-	"hrsh7th/nvim-cmp",
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-nvim-lua",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-cmdline",
-		"saadparwaiz1/cmp_luasnip",
-		"L3MON4D3/LuaSnip",
-		"rafamadriz/friendly-snippets",
-	},
-  config = function ()
-    local cmp = require("cmp")
-    local luasnip = require("luasnip")
-    local types = require('cmp.types')
-	  vim.opt.completeopt = { "menu", "menuone", "noselect" }
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "L3MON4D3/LuaSnip", -- スニペットエンジン
+      "saadparwaiz1/cmp_luasnip", -- LuaSnip補完
+      "rafamadriz/friendly-snippets", -- 既存スニペット集
+    },
+    config = function()
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
 
-    require("luasnip.loaders.from_vscode").lazy_load()
+      require("luasnip.loaders.from_vscode").lazy_load() -- スニペットのロード
 
-    cmp.setup({
-      
-      snippet = {
-        expand = function(args)
-          require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-        end,
-      },
-      window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
-      },
-      mapping = cmp.mapping.preset.insert({
-        -- New mappings
-        ['<C-u>'] = cmp.mapping.select_next_item({ behavior = types.cmp.SelectBehavior.Insert }),
-        ['<C-d>'] = cmp.mapping.select_prev_item({ behavior = types.cmp.SelectBehavior.Insert }),
-        ["<C-y>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-o>"] = cmp.mapping.scroll_docs(4),
-        ["<C-r>"] = cmp.mapping.complete(),
-        ["<C-x>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-      }),
-      sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "nvim_lua" },
-        { name = "luasnip" }, -- For luasnip users.
-        -- { name = "orgmode" },
-      }, {
-        { name = "buffer" },
-        { name = "path" },
-      }),
-      })
-  end
+      cmp.setup {
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<Tab>"] = cmp.mapping.select_next_item(),
+          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Enterで補完を確定
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" }, -- スニペット補完
+        }, {
+          { name = "buffer" },
+          { name = "path" },
+        }),
+      }
+    end,
+  },
 }
 
