@@ -8,11 +8,16 @@ return {
 		"hrsh7th/cmp-cmdline",
 		"saadparwaiz1/cmp_luasnip",
 		"L3MON4D3/LuaSnip",
+		"rafamadriz/friendly-snippets",
 	},
   config = function ()
     local cmp = require("cmp")
+    local luasnip = require("luasnip")
     local types = require('cmp.types')
 	  vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
+    require("luasnip.loaders.from_vscode").lazy_load()
+
     cmp.setup({
       
       snippet = {
@@ -32,12 +37,12 @@ return {
         ["<C-o>"] = cmp.mapping.scroll_docs(4),
         ["<C-r>"] = cmp.mapping.complete(),
         ["<C-x>"] = cmp.mapping.abort(),
-        ["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       }),
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
-        -- { name = "luasnip" }, -- For luasnip users.
+        { name = "luasnip" }, -- For luasnip users.
         -- { name = "orgmode" },
       }, {
         { name = "buffer" },
