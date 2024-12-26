@@ -4,7 +4,7 @@ return {
     local lspconfig = require("lspconfig")
 
     -- TypeScript LSP
-    lspconfig.tsserver.setup{}
+    lspconfig.ts_ls.setup{}
 
     -- Python LSP
     lspconfig.pyright.setup{}
